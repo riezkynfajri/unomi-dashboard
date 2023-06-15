@@ -10,14 +10,14 @@ export default {
     ...mapActions(useTracerStore, ["getScopes"])
   },
   mounted() {
-    this.getScopes()
+    this.getScopes();
   }
-}
+};
 </script>
 <template>
   <main>
-    <div class="scope-list" v-for="(scope,i) in scopes">
-      <p :id="i">{{ scope }}</p>
+    <div :key="i" class="scope-list" v-for="(scope, i) in scopes">
+      <p>{{ scope }}</p>
     </div>
   </main>
 </template>

@@ -6,6 +6,11 @@ export const useTracerStore = defineStore({
   state: () => ({
     URL: "http://localhost:8181/cxs",
     scopes: null,
+    profiles: null,
+    auth: {
+      username: 'karaf',
+      password: 'karaf'
+    },
     createScopeData: {
       itemId: 'test-app-1',
       itemType: 'scope',
@@ -27,10 +32,7 @@ export const useTracerStore = defineStore({
             "Content-Type": "application/json",
             "accept": "application/json"
           },
-          auth: {
-            username: 'karaf',
-            password: 'karaf'
-          },
+          auth: { ...this.auth },
           data: { ...this.createScopeData },
         });
       } catch (err) {
@@ -47,14 +49,29 @@ export const useTracerStore = defineStore({
             "Content-Type": "application/json",
             "accept": "application/json"
           },
-          auth: {
-            username: 'karaf',
-            password: 'karaf'
-          }
+          auth: { ...this.auth }
         });
         this.scopes = data;
       } catch (err) {
         console.log(err);
+      }
+    },
+
+    async getProfiles() {
+      try {
+        const { data } = await axios.request({
+          method: "post",
+          url: `${this.URL}/profiles/search`,
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json"
+          },
+          auth: { ...this.auth },
+        });
+        console.log(data);
+        // this.profiles = data;
+      } catch (err) {
+        console.log(err.response.data);
       }
     }
   }
