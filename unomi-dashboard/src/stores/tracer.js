@@ -12,20 +12,22 @@ export const useTracerStore = defineStore({
       password: 'karaf'
     },
     createScopeData: {
-      itemId: 'test-app-1',
       itemType: 'scope',
       metadata: {
-        id: 'test-app-1',
-        name: 'test app 1',
-        description: 'this is the first test',
+        id: '',
+        name: '',
+        description: '',
       }
     }
   }),
   // getters: {},
   actions: {
-    async addScope() {
+    async addScope(e) {
       try {
-        const { data } = await axios.request({
+        e.preventDefault();
+        let itemId = this.createScopeData.metadata.id;
+
+        await axios.request({
           method: "post",
           url: `${this.URL}/scopes`,
           headers: {
@@ -33,7 +35,7 @@ export const useTracerStore = defineStore({
             "accept": "application/json"
           },
           auth: { ...this.auth },
-          data: { ...this.createScopeData },
+          data: { itemId, ...this.createScopeData },
         });
       } catch (err) {
         console.log(err.response.data);
@@ -51,9 +53,31 @@ export const useTracerStore = defineStore({
           },
           auth: { ...this.auth }
         });
+        data.sort(function (a, b) {
+          return a.metadata.id - b.metadata.id || a.metadata.id.localeCompare(b.metadata.id);
+        });
         this.scopes = data;
       } catch (err) {
         console.log(err);
+      }
+    },
+
+    async deleteScope(id) {
+      try {
+        await axios.request({
+          method: "delete",
+          url: `${this.URL}/scopes/${id}`,
+          headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json"
+          },
+          auth: { ...this.auth }
+        });
+        
+        let index = this.scopes.findIndex(el => el.itemId === id);
+        this.scopes.splice(index, 1);
+      } catch (err) {
+        console.log(err.response.data);
       }
     },
 
