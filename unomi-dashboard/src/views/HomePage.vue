@@ -9,7 +9,7 @@ export default {
     ...mapActions(useTracerStore, ["getScopes", "deleteScope"])
   },
   mounted() {
-    this.getScopes();
+    if (!this.scopes) this.getScopes();
   }
 };
 </script>
@@ -20,7 +20,7 @@ export default {
         <p>{{ scope.metadata.id }}</p>
         <p>{{ scope.metadata.name }}</p>
         <p>{{ scope.metadata.description }}</p>
-        <RouterLink :to="{ name: 'edit-scope', params: { id: scope.metadata.id }}">Edit</RouterLink>
+        <RouterLink :to="{ name: 'edit-scope', params: { id: scope.metadata.id } }">Edit</RouterLink>
         <button @click="deleteScope(scope.metadata.id)">Delete</button>
       </div>
     </div>
