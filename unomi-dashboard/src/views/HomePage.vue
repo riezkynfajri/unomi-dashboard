@@ -18,6 +18,7 @@ export default {
     <div :key="i" class="scope-list" v-for="(scope, i) in scopes">
       <div style="display: flex; flex-direction: column;">
         <p>{{ scope.metadata.id }}</p>
+        <p>V.{{ scope.version }}</p>
         <p>{{ scope.metadata.name }}</p>
         <p>{{ scope.metadata.description }}</p>
         <RouterLink :to="{ name: 'edit-scope', params: { id: scope.metadata.id } }">Edit</RouterLink>

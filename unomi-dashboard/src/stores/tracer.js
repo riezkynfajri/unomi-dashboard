@@ -69,9 +69,9 @@ export const useTracerStore = defineStore({
         });
 
         let scope = this.scopes.find((el) => el.itemId === itemId);
-        console.log(scope)
         scope.metadata.name = name;
         scope.metadata.description = description;
+        scope.version += 1
         this.move('/');
       } catch (err) {
         console.log(err.response.data);
@@ -93,7 +93,6 @@ export const useTracerStore = defineStore({
         data.sort(function (a, b) {
           return a.metadata.id - b.metadata.id || a.metadata.id.localeCompare(b.metadata.id);
         });
-        console.log(data);
         this.scopes = data;
       } catch (err) {
         console.log(err);
@@ -136,7 +135,6 @@ export const useTracerStore = defineStore({
           },
           auth: { ...this.auth },
         });
-        console.log(data);
         // this.profiles = data;
       } catch (err) {
         console.log(err.response.data);
