@@ -131,11 +131,11 @@ export const useTracerStore = defineStore({
           url: `${this.URL}/profiles/search`,
           headers: {
             "Content-Type": "application/json",
-            "accept": "application/json"
+            "accept": "application/json",
           },
           auth: { ...this.auth },
         });
-        // this.profiles = data;
+        this.profiles = data;
       } catch (err) {
         console.log(err.response.data);
       }

@@ -14,8 +14,7 @@ export default {
 };
 </script>
 <template>
-  <main>
-    <div :key="i" class="scope-list" v-for="(scope, i) in scopes">
+    <div :key="i" style="width:100%;display: flex; flex: 1; margin: auto;" class="scope-list" v-for="(scope, i) in scopes">
       <div style="display: flex; flex-direction: column;">
         <p>{{ scope.metadata.id }}</p>
         <p>V.{{ scope.version }}</p>
@@ -25,5 +24,4 @@ export default {
         <button @click="deleteScope(scope.metadata.id)">Delete</button>
       </div>
     </div>
-  </main>
 </template>
